@@ -56,6 +56,10 @@ const sel = await article.evaluate(() => {
 });
 check('selection exceeds the ~1024 char context-menu cap', sel.chars > 1024, `${sel.words} words, ${sel.chars} chars`);
 
+// The selection has been read into `sel`; nothing below needs this page. Closing it leaves
+// the panel as the only tab, so it cannot lose the foreground to it.
+await article.close();
+
 // --- panel ---
 const panel = await ctx.newPage();
 const errors = [];
@@ -93,15 +97,22 @@ async function inspect(request) {
  * does not discard the acceptance results that have already been established.
  */
 async function shoot(name) {
-  try {
-    await panel.bringToFront();
-    // Let the compositor settle before asking for pixels.
-    await panel.waitForTimeout(200);
-    await panel.screenshot({ path: join(SHOTS, name) });
-    check(`captured ${name}`, true);
-  } catch (cause) {
-    check(`captured ${name}`, false, String(cause).split('\n')[0]);
+  // Under a virtual display the window may not have been composited yet when the first
+  // capture is attempted, and Chromium answers "Unable to capture screenshot" rather than
+  // waiting. A fixed delay is a guess; this retries until there is a frame to read.
+  let last;
+  for (const wait of [150, 400, 1000, 2500]) {
+    try {
+      await panel.bringToFront();
+      await panel.waitForTimeout(wait);
+      await panel.screenshot({ path: join(SHOTS, name) });
+      check(`captured ${name}`, true);
+      return;
+    } catch (cause) {
+      last = cause;
+    }
   }
+  check(`captured ${name}`, false, String(last).split('\n')[0]);
 }
 
 console.log('\n== text fixture matrix ==');
