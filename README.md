@@ -1,5 +1,7 @@
 # Provenance Inspector
 
+[![CI](https://github.com/brentrockwood/provenance-inspector-extension/actions/workflows/ci.yml/badge.svg)](https://github.com/brentrockwood/provenance-inspector-extension/actions/workflows/ci.yml)
+
 A Chrome extension that inspects selected web content for verifiable provenance signals and
 reports the evidence it can establish — without pretending that absence of evidence proves
 human authorship.
@@ -182,6 +184,11 @@ npm run build
 npm i -D playwright && npx playwright install chromium
 node e2e/verify.mjs
 ```
+
+Both the unit suite and this end-to-end run execute in CI on every push and pull request, and
+CI additionally re-derives every fixture and the demo page from the generation record and fails
+if the result differs from what is checked in — so the reproducibility claim above is enforced
+rather than asserted.
 
 Loads the built extension into real Chromium and asserts the 16 things unit tests cannot see —
 that the MV3 policy actually permits the C2PA worker and its WebAssembly, that a 3,280-character

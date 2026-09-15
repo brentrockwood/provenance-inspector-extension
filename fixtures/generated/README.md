@@ -24,6 +24,25 @@ such a record with a message naming this cause, but it is cheaper to get right t
 
 ## Steps
 
+One command, from the repository root:
+
+```sh
+./tools/generate-fixtures.sh --tokens 1000 --seed 20260915
+node tools/build-fixtures.mjs
+node tools/build-fixture-page.mjs
+npm test
+```
+
+At 1,000 tokens the record's two watermarked samples concatenate to roughly 1,500 words, which
+lands inside the 800–1,500 the brief asks for. The script refuses `--tokens` above 1,000, since
+GPT-2's context cannot fit it.
+
+It needs network access to PyPI, GitHub, and `huggingface.co` — the GPT-2 weights (~550MB) are
+downloaded on first run.
+
+<details>
+<summary>What the script does, if you would rather run it by hand</summary>
+
 The upstream project ships the generation script, and it emits the reference implementation's
 own scores alongside the text — which is what the differential test then checks us against.
 
@@ -50,6 +69,8 @@ npm test
 
 Use a dedicated virtualenv. `requirements-deepmind.txt` pins torch 2.4 / transformers 4.43
 because `synthid-text` does, and it conflicts with the other requirements file in that repo.
+
+</details>
 
 ## Notes
 

@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Types, tests, fixtures
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run typecheck
+
+      # Includes the 174 differential tests whose expectations came out of the Python
+      # reference implementation. They are the project's fidelity claim, so a red run here
+      # means the port no longer reproduces the reference.
+      - run: npm test
+
+      - name: Build the extension
+        run: npx vite build
+
+      # The README claims the screenshots are reproducible from checked-in fixtures rather
+      # than staged. This is that claim, checked: regenerating everything from the pinned
+      # generation record must produce no diff.
+      - name: Fixtures are reproducible from the generation record
+        run: |
+          node tools/build-fixtures.mjs
+          node tools/build-fixture-page.mjs
+          if ! git diff --exit-code -- fixtures/; then
+            echo "::error::fixtures/ does not match what the generation record produces."
+            echo "::error::Run tools/build-fixtures.mjs and tools/build-fixture-page.mjs and commit the result."
+            exit 1
+          fi
+
+  e2e:
+    name: End-to-end in Chromium
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build the extension
+        run: npx vite build
+
+      # Playwright is deliberately not a dependency: it is only needed for this run, and
+      # keeping it out means a contributor's `npm ci` does not pull a browser toolchain.
+      - name: Install Playwright and Chromium
+        run: |
+          npm i --no-save playwright
+          npx playwright install --with-deps chromium
+
+      # Loads the built extension into a real Chromium. This is the only place the things
+      # unit tests cannot see get checked: that Manifest V3's content security policy
+      # actually permits the C2PA worker and its WebAssembly, and that a selection larger
+      # than the context menu's ~1KB cap survives the trip to the panel.
+      #
+      # Extensions require a real browser rather than the headless shell, so it runs under
+      # a virtual display.
+      - name: Load the extension and assert the acceptance matrix
+        run: xvfb-run -a node e2e/verify.mjs
+
+      - name: Upload panel screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: panel-screenshots
+          path: docs/screenshots/
+          if-no-files-found: warn
