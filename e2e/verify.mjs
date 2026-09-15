@@ -81,12 +81,35 @@ async function inspect(request) {
   }));
 }
 
+/**
+ * Capture the panel.
+ *
+ * A headed Chromium refuses to capture a tab that is not frontmost — the fixture article is
+ * open alongside the panel, so the panel has to be raised first. This surfaced only in CI:
+ * older Chromium builds captured background tabs happily, current ones answer
+ * "Unable to capture screenshot".
+ *
+ * A failure here is reported as a named check rather than thrown, so that losing a screenshot
+ * does not discard the acceptance results that have already been established.
+ */
+async function shoot(name) {
+  try {
+    await panel.bringToFront();
+    // Let the compositor settle before asking for pixels.
+    await panel.waitForTimeout(200);
+    await panel.screenshot({ path: join(SHOTS, name) });
+    check(`captured ${name}`, true);
+  } catch (cause) {
+    check(`captured ${name}`, false, String(cause).split('\n')[0]);
+  }
+}
+
 console.log('\n== text fixture matrix ==');
 const wm = await inspect({ ...base, inspectionId: 'wm', kind: 'text', text: sel.text });
 check('watermarked selection -> watermark evidence', wm.heading === 'Watermark signal detected');
 check('every card names its detector version', wm.cards.every((c) => c.id));
 check('every result carries limitations', wm.cards.every((c) => c.limits > 0));
-await panel.screenshot({ path: join(SHOTS, 'watermark-detected.png') });
+await shoot('watermark-detected.png');
 
 const ctl = await inspect({ ...base, inspectionId: 'ctl', kind: 'text', text: readFileSync(join(root, 'fixtures/text/control-unwatermarked.txt'), 'utf8').trim() });
 check('unwatermarked control -> no false positive', ctl.heading === 'No supported provenance signal detected');
@@ -100,7 +123,7 @@ const img = (f) => ({ ...base, kind: 'image', assetUrl: `https://example.test/${
 const valid = await inspect({ ...img('signed-valid.jpg'), inspectionId: 'iv' });
 check('valid credential verifies and names its issuer', valid.heading === 'Valid Content Credential' && /C2PA Test Signing Cert/.test(valid.body));
 check('credential scope stays on the asset', /not automatically to surrounding text/i.test(valid.body));
-await panel.screenshot({ path: join(SHOTS, 'content-credential.png') });
+await shoot('content-credential.png');
 
 const tampered = await inspect({ ...img('signed-tampered.jpg'), inspectionId: 'it' });
 check('tampered credential never renders as verified', tampered.heading !== 'Valid Content Credential' && !/Detected/.test(tampered.cards.map((c) => c.result).join()));
