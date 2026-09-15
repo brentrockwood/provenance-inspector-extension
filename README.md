@@ -141,8 +141,11 @@ another**, because they test different schemes.
   no cryptographic guarantees. The significance threshold is set at 1e-6 rather than a
   conventional 0.05 to buy margin against that gap.
 - **The demo passage is 476 words**, not the 800–1,500 the product brief imagines, because the
-  pinned generation record contains 320-token samples. Longer fixtures need a generation run
-  against GPT-2 with the matching watermark configuration.
+  pinned generation record contains 320-token samples. Longer fixtures need a local generation
+  run — see [`fixtures/generated/README.md`](fixtures/generated/README.md), which is wired so
+  that dropping the record in place re-points the fixtures and the tests with no code edits.
+  GPT-2's 1,024-token context caps a single continuation near 760 words, so more than that means
+  concatenating several samples.
 - **C2PA validation reports `Valid`, not `Trusted`.** The signature verifies; no trust list is
   consulted. Anyone can sign an asset with a certificate they generated themselves, and the
   panel says so.
@@ -167,7 +170,10 @@ Test coverage maps onto the claims:
   digest determinism, schema validation.
 - `packages/detectors/*/src` — the editorial calls: indeterminate-not-negative, no false
   positive at threshold, scope discipline, and that no result ever claims authorship.
-- `fixtures/fixtures.test.ts` — the fixture matrix against the checked-in files.
+- `fixtures/fixtures.test.ts` — the fixture matrix against the checked-in files, plus a
+  differential check that our mean g-value reproduces the Python reference implementation's own
+  score for the same sample (currently within 0.0007), and a digest check that no fixture has
+  been edited by hand.
 
 ### End-to-end
 

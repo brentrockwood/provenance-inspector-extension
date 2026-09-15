@@ -1,9 +1,10 @@
 {
-  "what": "Text fixtures derived from the pinned generation record.",
+  "what": "Text fixtures derived from a pinned generation record.",
   "derivedFrom": "packages/detectors/synthid-reference/vendor/data/pinned/texts.json",
   "generator": {
     "model": "openai-community/gpt2",
     "modelRevision": "607a30d783dfa663caf39e06633721c8d4cfcd7e",
+    "tokenizer": "openai-community/gpt2",
     "watermark": {
       "ngram_len": 5,
       "keys": [
@@ -49,28 +50,47 @@
       "min_new_tokens": 320
     }
   },
-  "note": "watermarked-long.txt concatenates the two watermarked samples. The digests here are of the file body without its trailing newline.",
+  "note": "watermarked-long.txt concatenates every watermarked sample in the record. referenceScore, where present, is the reference implementation's own mean g-value for that exact sample, and the test suite asserts our scorer reproduces it. Digests are of the file body without its trailing newline.",
   "files": [
     {
       "file": "watermarked-long.txt",
+      "composedOf": [
+        "watermarked",
+        "watermarked_alt"
+      ],
+      "expect": "positive",
       "words": 476,
       "characters": 3070,
       "sha256": "fe2d2a5718dd68db68d225a43116caaf50dc23426c32c91925eff74a19012345"
     },
     {
       "file": "watermarked-single.txt",
+      "composedOf": [
+        "watermarked"
+      ],
+      "expect": "positive",
+      "referenceScore": 0.5974613686534216,
       "words": 212,
       "characters": 1463,
       "sha256": "fc6681750fc1bf16c5d83fb85cb130e76985fd5074b5890f10e30f564a294f4c"
     },
     {
       "file": "control-unwatermarked.txt",
+      "composedOf": [
+        "control"
+      ],
+      "expect": "negative",
+      "referenceScore": 0.49703703703703705,
       "words": 281,
       "characters": 1671,
       "sha256": "e83d42c1a6f09fd03b54fad15daaac0ae1efb8c8c1197da60942ad3a0a16efb3"
     },
     {
       "file": "short.txt",
+      "composedOf": [
+        "watermarked"
+      ],
+      "expect": "indeterminate",
       "words": 25,
       "characters": 148,
       "sha256": "8f4e2e48f2db956b5e8d87ca989b99ce67a020481f347136c41dc7fded2ea5e3"
