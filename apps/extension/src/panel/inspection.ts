@@ -13,6 +13,7 @@ import {
   buildReport,
   countContent,
   defaultContext,
+  digestBytes,
   digestText,
   type ContentCounts,
   type Evidence,
@@ -31,17 +32,43 @@ export interface InspectionState {
   report: InspectionReport;
 }
 
+/** Runtime messages are JSON, so asset bytes arrive base64-encoded. */
+function decodeBase64(base64: string): ArrayBuffer {
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return bytes.buffer;
+}
+
 export function buildInput(request: InspectionRequest): InspectionInput {
+  if (request.kind === 'image') {
+    const bytes = request.assetBase64 ? decodeBase64(request.assetBase64) : undefined;
+    return {
+      id: request.inspectionId,
+      kind: 'image',
+      bytes,
+      mimeType: request.assetMimeType,
+      source: {
+        pageUrl: request.pageUrl,
+        pageTitle: request.pageTitle,
+        assetUrl: request.assetUrl,
+        extractionMethod: 'asset',
+      },
+      // The digest covers the asset bytes, so an exported report names what was verified.
+      digest: bytes ? digestBytes(bytes) : digestText(''),
+    };
+  }
+
   const text = request.text ?? '';
   return {
     id: request.inspectionId,
-    kind: request.kind,
-    text: request.kind === 'text' ? text : undefined,
+    kind: 'text',
+    text,
     source: {
       pageUrl: request.pageUrl,
       pageTitle: request.pageTitle,
       assetUrl: request.assetUrl,
-      extractionMethod: request.kind === 'image' ? 'asset' : 'selection',
+      extractionMethod: 'selection',
     },
     digest: digestText(text),
   };

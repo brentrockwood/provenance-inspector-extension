@@ -8,6 +8,7 @@
 
 import { DetectorRegistry } from '@provenance/evidence';
 import { synthIdReferenceDetector } from '@provenance/detector-synthid';
+import { c2paDetector } from '@provenance/detector-c2pa';
 import { anthropicStatusDetector } from '@provenance/detector-anthropic-status';
 
 import { EMPTY_SELECTION_MESSAGE, type InspectionRequest } from '../shared/messages.ts';
@@ -19,6 +20,7 @@ const footer = document.getElementById('interpretation') as HTMLElement;
 
 const registry = new DetectorRegistry().register(
   synthIdReferenceDetector,
+  c2paDetector,
   anthropicStatusDetector,
 );
 
@@ -40,6 +42,17 @@ async function handleRequest(request: InspectionRequest): Promise<void> {
   if (request.problem === 'empty-selection') {
     latest = null;
     renderMessage(container, footer, 'Nothing selected', EMPTY_SELECTION_MESSAGE);
+    return;
+  }
+  if (request.problem === 'asset-fetch-failed') {
+    latest = null;
+    renderMessage(
+      container,
+      footer,
+      'Could not read this image',
+      'The page was not able to re-fetch this image, so its bytes could not be inspected. ' +
+        'This is common for cross-origin images served without permissive CORS headers.',
+    );
     return;
   }
   if (request.problem === 'extraction-failed') {

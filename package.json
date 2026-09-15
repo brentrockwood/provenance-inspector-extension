@@ -4,17 +4,21 @@
   "version": "0.1.0",
   "type": "module",
   "license": "MIT",
-  "engines": { "node": ">=20.19" },
+  "engines": {
+    "node": ">=20.19"
+  },
   "scripts": {
     "build": "tsc --noEmit && vite build",
     "dev": "vite build --watch",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "verify:e2e": "node e2e/verify.mjs"
   },
   "dependencies": {
-    "@noble/hashes": "^2.4.0",
-    "c2pa": "^0.27.0"
+    "@contentauth/c2pa-types": "^0.7.4",
+    "@contentauth/c2pa-wasm": "^0.11.6",
+    "@noble/hashes": "^2.4.0"
   },
   "devDependencies": {
     "@types/chrome": "^0.1.28",

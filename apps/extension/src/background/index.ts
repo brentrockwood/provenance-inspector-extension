@@ -48,6 +48,49 @@ function readSelection(): { text: string; title: string; url: string } {
   };
 }
 
+/**
+ * Read the image bytes from inside the page.
+ *
+ * Fetching the asset from the panel instead would need host permissions for every site the
+ * user might inspect — a permanent, broad grant for an occasional action. Fetching it in the
+ * page's own context under `activeTab` keeps the extension's standing access at nothing, and
+ * usually hits the browser cache rather than the network. The cost is that a cross-origin
+ * image the page itself cannot re-fetch is not inspectable, which is reported rather than
+ * worked around.
+ */
+async function readAsset(srcUrl: string): Promise<{ base64: string; mimeType: string } | null> {
+  try {
+    const response = await fetch(srcUrl);
+    if (!response.ok) return null;
+    const blob = await response.blob();
+    const base64 = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result).split(',')[1] ?? '');
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(blob);
+    });
+    return { base64, mimeType: blob.type || 'image/jpeg' };
+  } catch {
+    return null;
+  }
+}
+
+async function captureAsset(
+  tabId: number,
+  srcUrl: string,
+): Promise<{ base64: string; mimeType: string } | null> {
+  try {
+    const [result] = await chrome.scripting.executeScript({
+      target: { tabId },
+      func: readAsset,
+      args: [srcUrl],
+    });
+    return (result?.result as { base64: string; mimeType: string } | null) ?? null;
+  } catch {
+    return null;
+  }
+}
+
 async function captureSelection(
   tabId: number,
 ): Promise<{ text: string; title: string; url: string } | null> {
@@ -81,12 +124,16 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   const pageUrl = info.pageUrl ?? tab.url ?? '';
 
   if (info.mediaType === 'image' && info.srcUrl && !info.selectionText) {
+    const asset = await captureAsset(tab.id, info.srcUrl);
     publish({
       inspectionId,
       kind: 'image',
       assetUrl: info.srcUrl,
+      assetBase64: asset?.base64,
+      assetMimeType: asset?.mimeType,
       pageUrl,
       pageTitle: tab.title,
+      problem: asset ? undefined : 'asset-fetch-failed',
       requestedAt,
     });
     return;

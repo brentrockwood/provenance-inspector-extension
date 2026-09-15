@@ -12,10 +12,13 @@ export interface InspectionRequest {
   kind: 'text' | 'image';
   text?: string;
   assetUrl?: string;
+  /** Asset bytes as base64. Runtime messages are JSON, so bytes cannot travel as-is. */
+  assetBase64?: string;
+  assetMimeType?: string;
   pageUrl: string;
   pageTitle?: string;
   /** Why no content was captured, when that is the outcome. */
-  problem?: 'empty-selection' | 'extraction-failed';
+  problem?: 'empty-selection' | 'extraction-failed' | 'asset-fetch-failed';
   requestedAt: string;
 }
 

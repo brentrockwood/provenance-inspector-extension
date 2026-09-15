@@ -14,6 +14,7 @@ export default defineConfig({
   },
   test: {
     environment: 'node',
+    setupFiles: [p('./test/filereadersync-shim.ts')],
     include: ['packages/**/*.test.ts', 'apps/**/*.test.ts', 'fixtures/**/*.test.ts'],
   },
 });

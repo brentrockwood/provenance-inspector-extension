@@ -41,6 +41,9 @@ export default defineConfig({
       input: {
         panel: p('./apps/extension/panel.html'),
         background: p('./apps/extension/src/background/index.ts'),
+        // Its own entry, not a Vite `?worker` import: the worker must land at a stable path
+        // on the extension's own origin so it can be loaded under `script-src 'self'`.
+        'c2pa-worker': p('./packages/detectors/c2pa/src/worker.ts'),
       },
       output: {
         entryFileNames: '[name].js',

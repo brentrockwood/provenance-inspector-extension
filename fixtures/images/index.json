@@ -1,0 +1,28 @@
+{
+  "what": "C2PA image fixtures.",
+  "provenance": "signed-valid.jpg and unsigned.jpg are CA.jpg and A.jpg from contentauth/c2pa-js (MIT, © 2025 Adobe), used as published test assets. signed-tampered.jpg is derived from signed-valid.jpg by this script.",
+  "expected": {
+    "signed-valid.jpg": "signature positive, cryptographic, scoped to the asset",
+    "unsigned.jpg": "signature negative — no credential present",
+    "signed-tampered.jpg": "validation_state Invalid — never rendered as verified"
+  },
+  "files": [
+    {
+      "file": "signed-valid.jpg",
+      "bytes": 166864,
+      "sha256": "e71bff58fc57640803e6e65f7534e2fb0c2f99018c85276cc14b30f04427cc76"
+    },
+    {
+      "file": "unsigned.jpg",
+      "bytes": 61720,
+      "sha256": "f999fd78bfe8a83c96e468a078830ba94485bc1bc6fd086fb94a43bd29dd0f23"
+    },
+    {
+      "file": "signed-tampered.jpg",
+      "bytes": 166864,
+      "sha256": "ea9d55e085c5c464e81796681471ee1138aefacb4b290e2dba69f9db41b40047",
+      "derivedFrom": "signed-valid.jpg",
+      "method": "XOR 0x5a over 4096 bytes starting at offset 133491"
+    }
+  ]
+}
