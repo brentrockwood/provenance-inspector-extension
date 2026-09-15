@@ -389,16 +389,6 @@ The v0 is complete when all of the following are true:
 | Credential-bearing image modified after signing | Signature invalid/error, never verified |
 | Anthropic detector without access | `unavailable` |
 
-## Proposal framing
-
-The product should be described accurately:
-
-> Rockwood Lab built a working Chrome reference implementation that extracts selected web content, dispatches it to pluggable provenance detectors, reconciles heterogeneous evidence without collapsing it into a misleading authorship score, and renders the result in context. The current build demonstrates controlled text-watermark detection and signed asset verification; proprietary provider detectors can be added when authorized access is available.
-
-The useful obnoxious sentence remains:
-
-> **A reference implementation is available and running in Chrome.**
-
 ## Screenshot specification
 
 Use a normal-looking fixture article page, not a developer console. Select roughly 800–1,500 words of controlled watermarked text. The side panel should show:
