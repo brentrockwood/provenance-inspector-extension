@@ -1,0 +1,54 @@
+{
+  "_comment": [
+    "The watermark configuration this lab implements.",
+    "",
+    "Every value here is PUBLISHED, and the keys are not this lab's invention: they are the",
+    "DEFAULT_WATERMARKING_CONFIG shipped in google-deepmind/synthid-text @ addb4a1",
+    "(src/synthid_text/synthid_mixin.py). They are demonstration keys in a public",
+    "repository. A real deployment keeps the whole block secret, because anyone holding it",
+    "can score text with it, mark text with it, or strip the mark from text.",
+    "",
+    "Parameter names follow that repository, not this lab's preferences. Its own comment on",
+    "ngram_len reads: 'This corresponds to H=4 context window size in the paper.'"
+  ],
+  "construction": "deepmind-addb4a1",
+  "watermark": {
+    "ngram_len": 5,
+    "keys": [654, 400, 836, 123, 340, 443, 597, 160, 57, 29, 590, 639, 13, 715, 468,
+             990, 966, 226, 324, 585, 118, 504, 421, 521, 129, 669, 732, 225, 90, 960],
+    "context_history_size": 1024,
+    "num_leaves": 2,
+    "skip_first_ngram_calls": true
+  },
+  "transformers_variant": {
+    "_comment": [
+      "A second, genuinely different reference implementation of the same scheme.",
+      "transformers 5.15.1 seeds its hash chain with the literal 1 and reads g-values from a",
+      "table of random bits built by a torch RNG. The official repository removed that table",
+      "in PR #32. Both are implemented here so the lab can show that two faithful",
+      "implementations, given the same text and the same keys, do not read each other's marks."
+    ],
+    "sampling_table_size": 65536,
+    "sampling_table_seed": 0
+  },
+  "decoding": {
+    "_comment": [
+      "temperature and top_k are applied by the reference logits processor itself: it scales",
+      "the scores, takes the top k, watermarks within that candidate set, and samples from",
+      "the result. So the distribution the tournament acts on is already a top-k",
+      "distribution, and this lab never calls it the model's unmodified distribution.",
+      "min_new_tokens equals max_new_tokens, which suppresses the end-of-text token until the",
+      "target length so the watermarked and control samples are the same length and differ in",
+      "the watermark alone. That is a real constraint on the sampling distribution and is",
+      "recorded rather than hidden."
+    ],
+    "temperature": 1.0,
+    "top_k": 40,
+    "max_new_tokens": 320,
+    "min_new_tokens": 320
+  },
+  "model": {
+    "model_id": "openai-community/gpt2",
+    "tokenizer_id": "openai-community/gpt2"
+  }
+}

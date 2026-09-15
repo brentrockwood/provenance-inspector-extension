@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Provenance evidence</title>
+    <link rel="stylesheet" href="./src/panel/panel.css" />
+  </head>
+  <body>
+    <main id="app" class="panel">
+      <header class="panel__header">
+        <h1 class="panel__title">Provenance evidence</h1>
+        <span class="badge badge--reference" title="Detectors run against published demonstration keys, not a production deployment">Reference configuration</span>
+      </header>
+      <div id="content" class="panel__content">
+        <p class="placeholder">
+          Select a passage on the page, then choose <strong>Inspect provenance</strong> from the
+          right-click menu.
+        </p>
+      </div>
+      <footer class="panel__footer">
+        <p id="interpretation" class="note"></p>
+      </footer>
+    </main>
+    <script type="module" src="./src/panel/panel.ts"></script>
+  </body>
+</html>

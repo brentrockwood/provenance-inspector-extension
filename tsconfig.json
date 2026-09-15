@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+    "noEmit": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "types": ["vite/client", "node", "chrome"],
+    "baseUrl": ".",
+    "paths": {
+      "@provenance/evidence": ["packages/evidence/src/index.ts"],
+      "@provenance/detector-synthid": ["packages/detectors/synthid-reference/src/index.ts"],
+      "@provenance/detector-c2pa": ["packages/detectors/c2pa/src/index.ts"],
+      "@provenance/detector-anthropic-status": ["packages/detectors/anthropic-status/src/index.ts"]
+    }
+  },
+  "include": ["apps", "packages", "fixtures", "vite.config.ts", "vitest.config.ts"]
+}

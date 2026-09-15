@@ -1,0 +1,21 @@
+{
+ "what": "GPT-2 byte-level BPE vocabulary and merge ranks",
+ "tokenizer_id": "openai-community/gpt2",
+ "tokenizer_revision": "607a30d783dfa663caf39e06633721c8d4cfcd7e",
+ "vocab_size": 50257,
+ "merge_count": 50000,
+ "vocab_sha256": "e35a33a0b2250c932ffdafc4c3a3552aef0cc7af7a11e9ebfddf1d2a6517371f",
+ "merges_sha256": "04e3597d7996f292ca9b8b7285ca4d58a6ae171ac47d73fc7140ceb0c7a6bbc0",
+ "note": "vocab is newline-joined token strings in id order; a token containing a newline would corrupt this encoding, so the export asserts none does",
+ "provenance": {
+  "capture_script": "tools/export_tokenizer.py",
+  "capture_script_sha256": "06d2c9066919d5e7b45de3ffcd94d3e987c221a4dd73f3ef8040a7e1fb59495e",
+  "capture_repo_commit": "af8dcbcf29d13a23d1c5d816448df318923aa48c",
+  "capture_timestamp_utc": "2026-08-19T18:37:45Z",
+  "libraries": {
+   "python": "3.12.1",
+   "torch": "2.13.0+cpu",
+   "transformers": "5.15.1"
+  }
+ }
+}

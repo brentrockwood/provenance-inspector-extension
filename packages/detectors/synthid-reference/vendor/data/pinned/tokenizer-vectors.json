@@ -1,0 +1,392 @@
+{
+ "what": "GPT-2 tokenizer differential vectors",
+ "implementation_provenance": "REFERENCE-IMPLEMENTATION-FAITHFUL",
+ "tokenizer_id": "openai-community/gpt2",
+ "note": "produced by the Hugging Face tokenizer; the browser tokenizer is a reimplementation and must reproduce every one of these exactly",
+ "cases": [
+  {
+   "text": "The library's new archival policy explains that",
+   "token_ids": [
+    464,
+    5888,
+    338,
+    649,
+    3934,
+    2473,
+    2450,
+    6688,
+    326
+   ],
+   "decoded": "The library's new archival policy explains that",
+   "token_strings": [
+    "The",
+    "Ġlibrary",
+    "'s",
+    "Ġnew",
+    "Ġarch",
+    "ival",
+    "Ġpolicy",
+    "Ġexplains",
+    "Ġthat"
+   ]
+  },
+  {
+   "text": " leading space",
+   "token_ids": [
+    3756,
+    2272
+   ],
+   "decoded": " leading space",
+   "token_strings": [
+    "Ġleading",
+    "Ġspace"
+   ]
+  },
+  {
+   "text": "no-leading-space",
+   "token_ids": [
+    3919,
+    12,
+    12294,
+    12,
+    13200
+   ],
+   "decoded": "no-leading-space",
+   "token_strings": [
+    "no",
+    "-",
+    "leading",
+    "-",
+    "space"
+   ]
+  },
+  {
+   "text": "Numbers 1234567890 and 0.5 and -3",
+   "token_ids": [
+    49601,
+    17031,
+    2231,
+    30924,
+    3829,
+    290,
+    657,
+    13,
+    20,
+    290,
+    532,
+    18
+   ],
+   "decoded": "Numbers 1234567890 and 0.5 and -3",
+   "token_strings": [
+    "Numbers",
+    "Ġ123",
+    "45",
+    "678",
+    "90",
+    "Ġand",
+    "Ġ0",
+    ".",
+    "5",
+    "Ġand",
+    "Ġ-",
+    "3"
+   ]
+  },
+  {
+   "text": "punctuation!!! ??? ,,, ... --- ***",
+   "token_ids": [
+    79,
+    16260,
+    2288,
+    10185,
+    34913,
+    837,
+    9832,
+    2644,
+    11420,
+    17202
+   ],
+   "decoded": "punctuation!!! ??? ,,, ... --- ***",
+   "token_strings": [
+    "p",
+    "unct",
+    "uation",
+    "!!!",
+    "Ġ???",
+    "Ġ,",
+    ",,",
+    "Ġ...",
+    "Ġ---",
+    "Ġ***"
+   ]
+  },
+  {
+   "text": "tabs\tand\nnewlines\r\nmixed",
+   "token_ids": [
+    8658,
+    82,
+    197,
+    392,
+    198,
+    3605,
+    6615,
+    201,
+    198,
+    76,
+    2966
+   ],
+   "decoded": "tabs\tand\nnewlines\r\nmixed",
+   "token_strings": [
+    "tab",
+    "s",
+    "ĉ",
+    "and",
+    "Ċ",
+    "new",
+    "lines",
+    "č",
+    "Ċ",
+    "m",
+    "ixed"
+   ]
+  },
+  {
+   "text": "     five spaces",
+   "token_ids": [
+    220,
+    220,
+    220,
+    220,
+    1936,
+    9029
+   ],
+   "decoded": "     five spaces",
+   "token_strings": [
+    "Ġ",
+    "Ġ",
+    "Ġ",
+    "Ġ",
+    "Ġfive",
+    "Ġspaces"
+   ]
+  },
+  {
+   "text": "CJK: 図書館の方針",
+   "token_ids": [
+    34,
+    41,
+    42,
+    25,
+    10263,
+    249,
+    111,
+    162,
+    249,
+    116,
+    165,
+    97,
+    101,
+    5641,
+    43095,
+    34932,
+    251
+   ],
+   "decoded": "CJK: 図書館の方針",
+   "token_strings": [
+    "C",
+    "J",
+    "K",
+    ":",
+    "Ġå",
+    "Ľ",
+    "³",
+    "æ",
+    "Ľ",
+    "¸",
+    "é",
+    "¤",
+    "¨",
+    "ãģ®",
+    "æĸ¹",
+    "éĩ",
+    "Ŀ"
+   ]
+  },
+  {
+   "text": "emoji: 🔏🗝️ and a flag 🇬🇧",
+   "token_ids": [
+    368,
+    31370,
+    25,
+    12520,
+    242,
+    237,
+    8582,
+    245,
+    251,
+    37929,
+    290,
+    257,
+    6056,
+    12520,
+    229,
+    105,
+    8582,
+    229,
+    100
+   ],
+   "decoded": "emoji: 🔏🗝️ and a flag 🇬🇧",
+   "token_strings": [
+    "em",
+    "oji",
+    ":",
+    "ĠðŁ",
+    "Ķ",
+    "ı",
+    "ðŁ",
+    "Ĺ",
+    "Ŀ",
+    "ï¸ı",
+    "Ġand",
+    "Ġa",
+    "Ġflag",
+    "ĠðŁ",
+    "ĩ",
+    "¬",
+    "ðŁ",
+    "ĩ",
+    "§"
+   ]
+  },
+  {
+   "text": "combining: éüñ vs éüñ",
+   "token_ids": [
+    24011,
+    3191,
+    25,
+    38251,
+    9116,
+    12654,
+    3691,
+    304,
+    136,
+    223,
+    84,
+    136,
+    230,
+    77,
+    136,
+    225
+   ],
+   "decoded": "combining: éüñ vs éüñ",
+   "token_strings": [
+    "comb",
+    "ining",
+    ":",
+    "ĠÃ©",
+    "Ã¼",
+    "Ã±",
+    "Ġvs",
+    "Ġe",
+    "Ì",
+    "ģ",
+    "u",
+    "Ì",
+    "Ī",
+    "n",
+    "Ì",
+    "ĥ"
+   ]
+  },
+  {
+   "text": "<|endoftext|>",
+   "token_ids": [
+    50256
+   ],
+   "decoded": "<|endoftext|>",
+   "token_strings": [
+    "<|endoftext|>"
+   ]
+  },
+  {
+   "text": "before <|endoftext|> after",
+   "token_ids": [
+    19052,
+    220,
+    50256,
+    706
+   ],
+   "decoded": "before <|endoftext|> after",
+   "token_strings": [
+    "before",
+    "Ġ",
+    "<|endoftext|>",
+    "Ġafter"
+   ]
+  },
+  {
+   "text": "Ġ literal and Ċ literal",
+   "token_ids": [
+    128,
+    254,
+    18875,
+    290,
+    34754,
+    232,
+    18875
+   ],
+   "decoded": "Ġ literal and Ċ literal",
+   "token_strings": [
+    "Ä",
+    "ł",
+    "Ġliteral",
+    "Ġand",
+    "ĠÄ",
+    "Ĭ",
+    "Ġliteral"
+   ]
+  },
+  {
+   "text": "",
+   "token_ids": [],
+   "decoded": "",
+   "token_strings": []
+  },
+  {
+   "text": "a",
+   "token_ids": [
+    64
+   ],
+   "decoded": "a",
+   "token_strings": [
+    "a"
+   ]
+  },
+  {
+   "text": "  ",
+   "token_ids": [
+    220,
+    220
+   ],
+   "decoded": "  ",
+   "token_strings": [
+    "Ġ",
+    "Ġ"
+   ]
+  }
+ ],
+ "cases_sha256": "011cef3e5e8070ab6da8b16d2122b8116005b690c45f444cc058dc83cafe673f",
+ "provenance": {
+  "capture_script": "tools/make_test_vectors.py",
+  "capture_script_sha256": "6d9305fc75365d43a0e044b12434c1b2b70b7ea41cd6c66aa987a4ea13a6a15c",
+  "capture_repo_commit": "af8dcbcf29d13a23d1c5d816448df318923aa48c",
+  "capture_timestamp_utc": "2026-08-19T19:15:11Z",
+  "libraries": {
+   "python": "3.12.1",
+   "torch": "2.4.0+cu121",
+   "transformers": "4.43.3",
+   "synthid-text": "0.2.1",
+   "synthid-text_commit": "addb4a158143c7c6851a1308f78b89fceed59683"
+  }
+ }
+}
