@@ -1,61 +1,48 @@
-any release of the library's work must be approved by the library's technical development committee and be approved before its release onto the public domain. For more information, read the policy to learn more.
+it has a mandate to collect all materials created by men as well as women (including diaries, correspondence, and personal collections). According to LIS staff, there is no one method of classifying the materials, but it is suggested that the materials be considered "a part of the broader literature of the world." However, the policy does not specifically ban materials of any gender or sexuality. The policy states that "All libraries should be aware of the possibility of a gender bias" in how books are assigned. LIS policy states:
 
-To learn more on the new policy, visit the library's website or go to library archival.pl.edu/~matthewyall/docs/general_policy_on_access_to_matthewyall.html. The archival repository also includes the library's catalog. If you have the library's archive, the archival repository can be accessed through Google Drive, and it's accessible under the Libraries section. The new policy provides that the library will post notices and information about the new policy on its web site at librariancentral.org or via email at matthewyall@librariancentral.org.
+In the interest of fairness to both men and women, the Librarian's Office and the LIS Archival Program (APS) will ensure that when we consider material created by women, men should not receive any extra consideration compared with women, even if the same work is also submitted in the name of a man.
 
-Read about the library in its current format at the news page.
+However, "The Archival Program [APS] is not responsible for assigning a particular treatment of a work to the work submitted under a given individual's name," according to NOC guidelines. Further:
 
-The library's policy also includes information about its current programs/services, and their availability and development. Programs/services include support and monitoring, as well as other support and management processes. You can access programs/services at librariancentral.org/programs/ services.
+In the APS' view, to consider books submitted under the name of a woman "more carefully than books submitted under the name of a man is consistent with the APS' desire to encourage gender and other diversity in library collections. For this reason, we will be looking to make sure that the work submitted is equally worthy." For this reason, the APs will also be following the guidelines outlined above concerning "how an individual has been represented in any particular volume [of an author's work]."
 
-Read more about the library here.
+The Library also has two gender studies centers:
 
-If you'd like to know what libraries are on the Web, check out these:
+Feminist Theory Centre
 
-Programs/Services
+Feminist Theory Centre is a centre for feminist and queer studies at the University of Toronto. It provides a space for feminists to gather and engage with one another and with the broader public in conversations about, and analysis of, feminist and social movements and ideologies. For more information please visit:
 
-library.c++
+A Feminist Studies Centre: Gender, Race, and Colonialism at the University of Toronto , by Laura Smith, Feminist Studies Centre, University of Toronto, 2002.
 
-The library's program files and libraries come from the following locations: the main
+Women in Revolutionary Thought, by Angela Davis, Feminist Studies Centre, University of Toronto, 2002.
 
-files and libraries that follow
+As far as the librarians themselves, one might argue that the inclusion of women in the archival library should not be the focus of concern, since the focus of the library is the entire history of the people who created the materials to be studied. But the librarians at the Toronto Public Library are still being asked to examine the role that gender and sexuality have played in their decision-making about assigning books at a time when the question of gender inequality is increasingly being raised both in popular and scholarly debates in academia. Moreover, the role that "gender" has played as a "category" of identity in the study of history has not yet been resolved.
 
-Programs/Services
 
-(with links to their official websites in the main archive, for example; the information in this archive about libraries with programming language support isn't available for archival purposes.)
+[ Back to Library articles ]
 
-The Library's Program files (including the Library Information System), including all of the C++ library files, are also accessible through www.c++libraries.sourceforge.net and on the Library. In addition, the Library.h file has its own web site at the Library Information System (LIS and the Library Development Center on the library's website), and the Library.o file's main public domain site at librariancentral.org or in the Library Information System.
+Libraries as Educational Institutions
 
-library.d
+As the following excerpts demonstrate, libraries are an essential part of the educational process. Their importance is evidenced in an array of ways.
 
-Libraries that come with programming languages
+The library contains "the materials, the knowledge, the culture, the practices, all the ways of being" of its readers and users. It creates "a space for critical reflection and interaction—the library is in effect a place of inquiry" (M. E. Johnson, "Learning in a Physical World: The Place of the Library in Higher Education," in The World of Manuscripts, ed. M. E. Johnson, 2002, p. 43).
 
-library.cpp
+[Back to Library articles]
 
-Library programming languages are generally free for noncommercial use. The libraries are listed in the librarian.w library's web site at librariancentral.org, and the Library Information System in a Web Web Site at librariancentral.org.
+Educational Resources
 
-The library also includes a webpage at the Library Information System that can be reached via email at matthewyall@librariancentral.org. The library also maintains the library software site at c++library.sourceforge.net.
+Resources and material are made available by the library to educators, research librarians and researchers to help assist educators, researchers and communities to increase, retain, and improve the effectiveness of the use of their materials. The resources on the Library's website do not necessarily represent all of the materials that exist and can change often or not at all without notice. Additionally, the Library does not always maintain all of the documents on its website. This site is made available to provide a listing of some of the resources and materials that have been made available to researchers, teachers, and librarians of all levels to aid in their work.
 
-Library Information System
+Resources & materials for librarians include:
 
-(with links to their official websites in the library's main archive, for example; the information in this archive about libraries with programming language support isn't available for archival purposes.)
+Library Research
 
-Programs/Services
+The following resources are available as research materials, either as the result of requests made by scholars or librarians, or as part of library research projects:
 
-The Library Information System and its programs are listed in the Library.h and Library.o files in the library's main public domain site (www.c++library.sourceforge.net).
+Searchable Bibliography
 
-Library Program Files
+The Library's Reference Services have created an online, searchable bibliography with the complete list of the book and article titles found in the public use holdings.
 
-library.o
+Research Libraries
 
-Libraries (and their software) that have a Java or C++ support program are not included on the Library.h program files. A Java or C++ program is included only if the library has Java support. There are some Java based libraries available at librariancentral.org that have the Java version (only one C++ version is available), as well as those with Java support (e.g., librariancentral.org has Java or C++ support programs in the software catalog). The library also includes libraries, including the Java programming languages, that use Java or C++.
-
-library.c++
-
-Library libraries include all the C++ libraries in the C++ library packages. Library programs are listed in the library.h files, or at the Library Information System page (www.c++library.sourceforge.net).
-
-programs.c++
-
-The Library Program Files have various functions and extensions for creating Java programs. Programming languages can be created and extended using programs and extensions (for example, the C++ language extension, or one of the C program languages available on the C++ language system). There are some C++ programs and extensions in the library that are free from the Java or C++ restrictions.
-
-Programs
-
-You can include and manipulate the Java program, the Java library, and the C++ library packages separately with the Java program files, at the software catalog. The files and directories of each program and library can be found in the LIS site or in the software catalog. Libraries that use the Java library should include the Java program files, and the Java
+The following research libraries provide reference services and provide a number of search tools for individuals doing research in the Library. These libraries are available to the public, including teachers, researchers, and librarians. The

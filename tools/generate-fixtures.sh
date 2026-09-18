@@ -12,21 +12,28 @@
 # tools/build-fixtures.mjs looks for it.
 #
 #   ./tools/generate-fixtures.sh [--tokens 1000] [--seed 20260915] [--workdir .fixture-build]
+#                                [--model openai-community/gpt2]
 #
 # Afterwards:
 #   node tools/build-fixtures.mjs && node tools/build-fixture-page.mjs && npm test
 #
 # Requirements: python3 (3.9-3.12), git, and network access to PyPI, GitHub, and
-# huggingface.co — the GPT-2 weights (~550MB) are downloaded on first run.
+# huggingface.co — the model weights are downloaded on first run (~550MB for the default
+# gpt2; a larger --model, e.g. gpt2-large or gpt2-xl, downloads proportionally more).
 #
-# This does NOT need a GPU. GPT-2 is 124M parameters decoded one token at a time; CPU
-# finishes in minutes, and upstream's processor pins device=cpu regardless.
+# This does NOT need a GPU. Every GPT-2 size is decoded one token at a time with a KV
+# cache; CPU finishes in minutes even at gpt2-xl (1.5B params), and upstream's processor
+# pins device=cpu regardless. --model must stay a GPT-2 variant: every size shares the
+# same tokenizer (verified byte-identical vocab/merges across gpt2..gpt2-xl), which is
+# what the detector's tokenizer_id check requires. A different model family would need a
+# different tokenizer and is out of scope for this script.
 
 set -euo pipefail
 
 TOKENS=1000
 SEED=20260915
 WORKDIR=".fixture-build"
+MODEL="openai-community/gpt2"
 UPSTREAM="https://github.com/systemslibrarian/crypto-lab-token-tell"
 # The construction this repo's detector implements. Pinned deliberately — see below.
 PIN="addb4a158143c7c6851a1308f78b89fceed59683"
@@ -36,6 +43,7 @@ while [[ $# -gt 0 ]]; do
     --tokens)  TOKENS="$2"; shift 2 ;;
     --seed)    SEED="$2";   shift 2 ;;
     --workdir) WORKDIR="$2"; shift 2 ;;
+    --model)   MODEL="$2";  shift 2 ;;
     -h|--help) sed -n '2,25p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
     *) echo "unknown argument: $1" >&2; exit 2 ;;
   esac
@@ -88,22 +96,27 @@ if ! python -c "import synthid_text" 2>/dev/null; then
   exit 1
 fi
 
-echo "==> setting generation length to ${TOKENS} tokens"
-python - "$TOKENS" <<'PY'
+echo "==> setting generation length to ${TOKENS} tokens, model to ${MODEL}"
+python - "$TOKENS" "$MODEL" <<'PY'
 import json, sys
 from pathlib import Path
 tokens = int(sys.argv[1])
+model = sys.argv[2]
 p = Path("src/data/watermark-config.json")
 cfg = json.loads(p.read_text())
 cfg["decoding"]["max_new_tokens"] = tokens
 # min == max suppresses end-of-text for the whole run, so the watermarked and control
 # samples come out the same length and differ in the watermark alone.
 cfg["decoding"]["min_new_tokens"] = tokens
+# tokenizer_id is left untouched: it is what the detector's validation checks, and every
+# GPT-2 size shares it. model_id only selects which weights generate the text.
+cfg["model"]["model_id"] = model
 p.write_text(json.dumps(cfg, indent=2) + "\n")
 print(f"    max_new_tokens = min_new_tokens = {tokens}")
+print(f"    model_id = {model}")
 PY
 
-echo "==> generating (downloads GPT-2 on first run)"
+echo "==> generating (downloads the model on first run)"
 python tools/generate_texts.py --seed "${SEED}"
 
 cd "${REPO_ROOT}"

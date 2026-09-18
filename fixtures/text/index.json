@@ -2,8 +2,8 @@
   "what": "Text fixtures derived from a pinned generation record.",
   "derivedFrom": "fixtures/generated/texts-long.json",
   "generator": {
-    "model": "openai-community/gpt2",
-    "modelRevision": "607a30d783dfa663caf39e06633721c8d4cfcd7e",
+    "model": "openai-community/gpt2-xl",
+    "modelRevision": "15ea56dee5df4983c59b2538573817e1667135e2",
     "tokenizer": "openai-community/gpt2",
     "watermark": {
       "ngram_len": 5,
@@ -59,9 +59,9 @@
         "watermarked_alt"
       ],
       "expect": "positive",
-      "words": 1607,
-      "characters": 9569,
-      "sha256": "90c2194dcd3788bae2fc705e364feee964ed3ed8160992e014959c8b55a5d90b"
+      "words": 1542,
+      "characters": 9100,
+      "sha256": "abea925c90bc9d18202169d45c4efdb2d8d515a0e0d84f0e8733b879c1773c0a"
     },
     {
       "file": "watermarked-single.txt",
@@ -69,10 +69,10 @@
         "watermarked"
       ],
       "expect": "positive",
-      "referenceScore": 0.6140131807145335,
-      "words": 813,
-      "characters": 4897,
-      "sha256": "666563cd323ddd53069f1e2f78b4b642e5282d841147632c3247b3b52b16f2e1"
+      "referenceScore": 0.607520325203252,
+      "words": 821,
+      "characters": 4788,
+      "sha256": "8430a5bb9447c52ec118734d853c2f16a6a20a9ea093dca0bc7c8a640e10154a"
     },
     {
       "file": "control-unwatermarked.txt",
@@ -80,10 +80,10 @@
         "control"
       ],
       "expect": "negative",
-      "referenceScore": 0.5025246548323471,
-      "words": 662,
-      "characters": 4603,
-      "sha256": "8f27417b32d37f60b3090775a1eaabc6715538c4cf429ead9b0c2f254a2a59b5"
+      "referenceScore": 0.5034614053305642,
+      "words": 785,
+      "characters": 4905,
+      "sha256": "9f69b491f2be23ffc9f571f737aece3e2e2d345bdb7e87183e7465144043657d"
     },
     {
       "file": "short.txt",
@@ -92,8 +92,8 @@
       ],
       "expect": "indeterminate",
       "words": 25,
-      "characters": 173,
-      "sha256": "432e56a1b24b322ee614db108840d00969a15d767d3d319b33358d9950e55d24"
+      "characters": 150,
+      "sha256": "e18de75723e8daa833eaebe96041bc19c3dda1a0bca246b61b8425f83869c659"
     }
   ]
 }
