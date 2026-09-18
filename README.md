@@ -56,7 +56,7 @@ Open `fixtures/page/article.html` in Chrome. Then:
 
 | Do this | You should see |
 | --- | --- |
-| Select the whole watermarked passage → **Inspect provenance** | **Watermark signal detected**, score ≈ 0.606 against a threshold of ≈ 0.517 over 624 scored positions |
+| Select the whole watermarked passage → **Inspect provenance** | **Watermark signal detected**, score ≈ 0.609 against a threshold of ≈ 0.510 over 1,985 scored positions |
 | Select the unwatermarked control passage | **No supported provenance signal detected** — and a note that this is not evidence of human authorship |
 | Select one short sentence | **Not enough evidence** — never a negative |
 | Right-click the signed image | **Valid Content Credential**, issuer `C2PA Test Signing Cert`, scoped to the asset |
@@ -142,12 +142,13 @@ another**, because they test different schemes.
   like a pseudorandom function. The reference implementation's own README states its hash offers
   no cryptographic guarantees. The significance threshold is set at 1e-6 rather than a
   conventional 0.05 to buy margin against that gap.
-- **The demo passage is 476 words**, not the 800–1,500 the product brief imagines, because the
-  pinned generation record contains 320-token samples. Longer fixtures need a local generation
-  run — see [`fixtures/generated/README.md`](fixtures/generated/README.md), which is wired so
-  that dropping the record in place re-points the fixtures and the tests with no code edits.
-  GPT-2's 1,024-token context caps a single continuation near 760 words, so more than that means
-  concatenating several samples.
+- **The demo passage is 1,639 words**, generated locally from a 1,000-token GPT-2 run — see
+  [`fixtures/generated/README.md`](fixtures/generated/README.md). That's above the 800–1,500 the
+  product brief imagines, because GPT-2's 1,024-token context caps a single continuation near
+  760 words, so reaching this length means concatenating two samples. Prose quality degrades over
+  a run this long with end-of-text suppressed: it stays coherent for a few paragraphs, then
+  drifts topic. That's a property of GPT-2 at this length, not of the watermark or the detector;
+  a modern model would need a matching JS tokenizer to fix, which is out of scope here.
 - **C2PA validation reports `Valid`, not `Trusted`.** The signature verifies; no trust list is
   consulted. Anyone can sign an asset with a certificate they generated themselves, and the
   panel says so.
@@ -174,7 +175,7 @@ Test coverage maps onto the claims:
   positive at threshold, scope discipline, and that no result ever claims authorship.
 - `fixtures/fixtures.test.ts` — the fixture matrix against the checked-in files, plus a
   differential check that our mean g-value reproduces the Python reference implementation's own
-  score for the same sample (currently within 0.0007), and a digest check that no fixture has
+  score for the same sample (currently within 0.001), and a digest check that no fixture has
   been edited by hand.
 
 ### End-to-end
