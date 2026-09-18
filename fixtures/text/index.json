@@ -1,6 +1,6 @@
 {
   "what": "Text fixtures derived from a pinned generation record.",
-  "derivedFrom": "packages/detectors/synthid-reference/vendor/data/pinned/texts.json",
+  "derivedFrom": "fixtures/generated/texts-long.json",
   "generator": {
     "model": "openai-community/gpt2",
     "modelRevision": "607a30d783dfa663caf39e06633721c8d4cfcd7e",
@@ -46,8 +46,8 @@
     "decoding": {
       "temperature": 1,
       "top_k": 40,
-      "max_new_tokens": 320,
-      "min_new_tokens": 320
+      "max_new_tokens": 1000,
+      "min_new_tokens": 1000
     }
   },
   "note": "watermarked-long.txt concatenates every watermarked sample in the record. referenceScore, where present, is the reference implementation's own mean g-value for that exact sample, and the test suite asserts our scorer reproduces it. Digests are of the file body without its trailing newline.",
@@ -59,9 +59,9 @@
         "watermarked_alt"
       ],
       "expect": "positive",
-      "words": 476,
-      "characters": 3070,
-      "sha256": "fe2d2a5718dd68db68d225a43116caaf50dc23426c32c91925eff74a19012345"
+      "words": 1607,
+      "characters": 9569,
+      "sha256": "90c2194dcd3788bae2fc705e364feee964ed3ed8160992e014959c8b55a5d90b"
     },
     {
       "file": "watermarked-single.txt",
@@ -69,10 +69,10 @@
         "watermarked"
       ],
       "expect": "positive",
-      "referenceScore": 0.5974613686534216,
-      "words": 212,
-      "characters": 1463,
-      "sha256": "fc6681750fc1bf16c5d83fb85cb130e76985fd5074b5890f10e30f564a294f4c"
+      "referenceScore": 0.6140131807145335,
+      "words": 813,
+      "characters": 4897,
+      "sha256": "666563cd323ddd53069f1e2f78b4b642e5282d841147632c3247b3b52b16f2e1"
     },
     {
       "file": "control-unwatermarked.txt",
@@ -80,10 +80,10 @@
         "control"
       ],
       "expect": "negative",
-      "referenceScore": 0.49703703703703705,
-      "words": 281,
-      "characters": 1671,
-      "sha256": "e83d42c1a6f09fd03b54fad15daaac0ae1efb8c8c1197da60942ad3a0a16efb3"
+      "referenceScore": 0.5025246548323471,
+      "words": 662,
+      "characters": 4603,
+      "sha256": "8f27417b32d37f60b3090775a1eaabc6715538c4cf429ead9b0c2f254a2a59b5"
     },
     {
       "file": "short.txt",
@@ -92,8 +92,8 @@
       ],
       "expect": "indeterminate",
       "words": 25,
-      "characters": 148,
-      "sha256": "8f4e2e48f2db956b5e8d87ca989b99ce67a020481f347136c41dc7fded2ea5e3"
+      "characters": 173,
+      "sha256": "432e56a1b24b322ee614db108840d00969a15d767d3d319b33358d9950e55d24"
     }
   ]
 }
