@@ -27,7 +27,7 @@ such a record with a message naming this cause, but it is cheaper to get right t
 One command, from the repository root:
 
 ```sh
-./tools/generate-fixtures.sh --tokens 1000 --seed 20260915
+./tools/generate-fixtures.sh --tokens 1000 --seed 20260915 --model openai-community/gpt2-xl
 node tools/build-fixtures.mjs
 node tools/build-fixture-page.mjs
 npm test
@@ -37,8 +37,15 @@ At 1,000 tokens the record's two watermarked samples concatenate to roughly 1,50
 lands inside the 800–1,500 the brief asks for. The script refuses `--tokens` above 1,000, since
 GPT-2's context cannot fit it.
 
-It needs network access to PyPI, GitHub, and `huggingface.co` — the GPT-2 weights (~550MB) are
-downloaded on first run.
+`--model` defaults to `openai-community/gpt2` and accepts any GPT-2 size (`gpt2-medium`,
+`gpt2-large`, `gpt2-xl`) — they all share the same tokenizer (verified byte-identical
+vocab/merges), which is all the detector's validation checks, so a larger size needs no
+detector-side change. It only changes which weights generate the text; scoring is identical.
+A larger model is slower to download and to generate with, but every size still finishes in
+minutes on CPU.
+
+It needs network access to PyPI, GitHub, and `huggingface.co` — model weights are downloaded on
+first run (~550MB for the default `gpt2`; `gpt2-xl` is roughly 6GB).
 
 <details>
 <summary>What the script does, if you would rather run it by hand</summary>
@@ -74,17 +81,19 @@ because `synthid-text` does, and it conflicts with the other requirements file i
 
 ## Notes
 
-- **Do not run this on a GPU.** GPT-2 is 124M parameters and the script decodes one token at a
-  time with a KV cache; a few thousand tokens finish on CPU in minutes. `make_processor` pins
-  `device=torch.device("cpu")` anyway.
-- **Length ceiling.** 1,024 tokens of context is a hard limit for every GPT-2 size, and they all
-  share the tokenizer, so a bigger GPT-2 does not help. To exceed ~760 words, generate two or
-  three samples with different prompts and seeds; `build-fixtures.mjs` concatenates every
-  watermarked sample in the record. Each seam costs roughly `ngram_len - 1` positions that score
-  as noise — negligible against thousands.
-- **Prose quality degrades.** With end-of-text suppressed for 1,000 tokens at temperature 1.0 and
-  top-k 40, GPT-2 wanders. If the screenshot needs to read well, the real fix is a modern model —
-  which means a matching JS tokenizer on the detection side, a larger piece of work.
+- **Do not run this on a GPU.** Even `gpt2-xl` (1.5B parameters) decodes one token at a time with
+  a KV cache and finishes on CPU in minutes. `make_processor` pins `device=torch.device("cpu")`
+  anyway.
+- **Length ceiling.** 1,024 tokens of context is a hard limit for every GPT-2 size regardless of
+  `--model`, so a bigger GPT-2 does not extend a single continuation past ~760 words. To exceed
+  that, generate two or three samples with different prompts and seeds; `build-fixtures.mjs`
+  concatenates every watermarked sample in the record. Each seam costs roughly `ngram_len - 1`
+  positions that score as noise — negligible against thousands.
+- **Prose quality degrades, less so at a larger `--model`.** With end-of-text suppressed for
+  1,000 tokens at temperature 1.0 and top-k 40, the base `gpt2` wanders off-topic within a few
+  paragraphs. `gpt2-xl` stays coherent and on-topic for the whole run in practice, though it is
+  still a 2019 model. If a modern model's prose is needed, the real fix is a matching JS
+  tokenizer on the detection side, a larger piece of work.
 - **Keep prompts mundane.** The upstream script explains why: a striking prompt lets a reader
   credit the prompt rather than the mechanism for anything they notice in the output.
 - **Never write into the vendored directory.** `packages/detectors/synthid-reference/vendor/` is
